@@ -4,7 +4,35 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <title><!-- KeycloakifyPageTitle --></title>
+        <title><!-- KeycloakifyPageTitle --></title>           
+
+        <!-- Begin DevOnlyContent -->
+        <script>
+            const originalFetch = window.fetch;
+
+            window.fetch = async function (...args) {
+            const startTime = performance.now();
+
+            // Log the request details
+            console.log('Fetching:', args[0]);
+            if (args[1]) {
+                console.log('Request Options:', args[1]);
+            }
+
+            const response = await originalFetch(...args);
+
+            const endTime = performance.now();
+            console.log('Response Status:', response.status);
+            console.log('Response URL:', response.url);
+            console.log('Request Duration:', (endTime - startTime).toFixed(2) + 'ms');
+
+            const responseBody = await response.clone().text();
+            console.log('Response Body:', responseBody);
+
+            return response;
+            };
+        </script>
+        <!-- End -->
     </head>
 
     <body>

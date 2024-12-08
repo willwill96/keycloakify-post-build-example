@@ -7,6 +7,9 @@ export default defineConfig({
     plugins: [
         react(),
         keycloakify({
+            environmentVariables: [
+                { name: "IS_DEV", default: "false" },
+            ],
             accountThemeImplementation: "none",
             postBuild: async (buildContext) => {
                 const fs = await import('fs/promises')
@@ -21,6 +24,10 @@ export default defineConfig({
                         let newContents = fileContents
                             // Per Page <title> element Logic
                             .replaceAll(/&lt;\!-- KeycloakifyPageTitle --&gt;/g, file.endsWith('register.ftl') ? "${msg(\"registerTitle\")}" : "${msg(\"loginTitle\",(realm.displayName!''))}")
+                            // Dev Environment Only scripts
+                            .replaceAll(/<\!-- Begin DevOnlyContent -->/g, `<#if (properties.IS_DEV! 'false') == 'true'>`)
+                            // Closing <#if> tags
+                            .replaceAll(/<\!-- End -->/g, `</#if>`)
                         await fs.writeFile(fileLocation, newContents)
                     }
                 }
