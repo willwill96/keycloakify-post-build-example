@@ -20,15 +20,20 @@ export default function KcPage(props: { kcContext: KcContext }) {
                 switch (kcContext.pageId) {
                     default:
                         return (
-                            <DefaultPage
-                                kcContext={kcContext}
-                                i18n={i18n}
-                                classes={classes}
-                                Template={Template}
-                                doUseDefaultCss={true}
-                                UserProfileFormFields={UserProfileFormFields}
-                                doMakeUserConfirmPassword={doMakeUserConfirmPassword}
-                            />
+                            <>
+                            <div style={{ color: 'blue', textAlign: 'center', fontWeight: 700, fontSize: 24}}>
+                                Example AB test is: {kcContext.exampleAbTest}
+                            </div>
+                                <DefaultPage
+                                    kcContext={kcContext}
+                                    i18n={i18n}
+                                    classes={classes}
+                                    Template={Template}
+                                    doUseDefaultCss={true}
+                                    UserProfileFormFields={UserProfileFormFields}
+                                    doMakeUserConfirmPassword={doMakeUserConfirmPassword}
+                                />
+                            </>
                         );
                 }
             })()}

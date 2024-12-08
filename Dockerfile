@@ -20,11 +20,24 @@ RUN yarn build-keycloak-theme
 
 RUN ls dist_keycloak/
 
+FROM gradle:8.11.1-jdk21-corretto AS java_spi_jar_builder
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the Gradle wrapper and project files
+COPY ./spi .
+
+# Run the Gradle build (this will also cache dependencies)
+RUN gradle build
+
 FROM quay.io/keycloak/keycloak:latest AS keycloak_builder
 
 # Set the working directory inside the Keycloak container
 WORKDIR /opt/keycloak
 
+# Copy the SPI JAR from the Gradle build stage to Keycloak's provider directory
+COPY --from=java_spi_jar_builder /app/lib/build/libs/custom-login-forms-provider.jar /opt/keycloak/providers/
 COPY --from=keycloakify_jar_builder /opt/app/dist_keycloak/keycloak-theme-for-kc-22-to-25.jar /opt/keycloak/providers/
 
 RUN /opt/keycloak/bin/kc.sh build

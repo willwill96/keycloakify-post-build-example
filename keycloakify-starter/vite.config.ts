@@ -26,6 +26,9 @@ export default defineConfig({
                             .replaceAll(/&lt;\!-- KeycloakifyPageTitle --&gt;/g, file.endsWith('register.ftl') ? "${msg(\"registerTitle\")}" : "${msg(\"loginTitle\",(realm.displayName!''))}")
                             // Dev Environment Only scripts
                             .replaceAll(/<\!-- Begin DevOnlyContent -->/g, `<#if (properties.IS_DEV! 'false') == 'true'>`)
+                            // AB Test Logic
+                            .replaceAll(/<\!-- Begin ExampleABTestOff -->/g, `<#if (exampleAbTest! 'off') == 'off'>`)
+                            .replaceAll(/<\!-- Begin ExampleABTestOn -->/g, `<#if (exampleAbTest! 'off') == 'on'>`)
                             // Closing <#if> tags
                             .replaceAll(/<\!-- End -->/g, `</#if>`)
                         await fs.writeFile(fileLocation, newContents)
