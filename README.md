@@ -28,3 +28,9 @@ This demo consists of three parts:
 - A keycloak app setup to consume the keycloakify theme & custom jar implementation.
 
 > Note: `FreemarkerLoginFormsProvider` is part of Keycloak's private API. Overriding it means you may not be able to rely on breaking changes to this file being documented.
+
+# Features
+
+- [Per-page html elements](https://github.com/willwill96/keycloakify-post-build-example/commit/902c81d18f0feb9145b041facba9af54b03c0236)
+- [Per-env html blocks](https://github.com/willwill96/keycloakify-post-build-example/commit/494cf2ff005895d55d2866d44937205626a1f961)
+- [Based on custom properties - basic AB test implementation](https://github.com/willwill96/keycloakify-post-build-example/commit/6f8c1105f5aae47e5db1c660b31812847a5f5b94)
