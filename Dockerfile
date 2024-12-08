@@ -31,7 +31,7 @@ COPY ./spi .
 # Run the Gradle build (this will also cache dependencies)
 RUN gradle build
 
-FROM quay.io/keycloak/keycloak:latest AS keycloak_builder
+FROM quay.io/keycloak/keycloak:26.0.7 AS keycloak_builder
 
 # Set the working directory inside the Keycloak container
 WORKDIR /opt/keycloak
@@ -43,7 +43,7 @@ COPY --from=keycloakify_jar_builder /opt/app/dist_keycloak/keycloak-theme-for-kc
 RUN /opt/keycloak/bin/kc.sh build
 
 
-FROM quay.io/keycloak/keycloak:26
+FROM quay.io/keycloak/keycloak:26.0.7
 COPY --from=keycloak_builder /opt/keycloak/ /opt/keycloak/
 COPY data/import/ /opt/keycloak/data/import/
 ENV KC_HOSTNAME=localhost
