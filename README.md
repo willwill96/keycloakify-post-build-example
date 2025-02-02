@@ -14,7 +14,7 @@ docker-compose up --build
 
 This will spin up a keycloak server on `http://localhost:8080` that you can log into with `admin:admin`.
 
-If you navigate to `http://localhost:8080/realms/test-realm`, you will be taken to a login flow that has two dynamically rendered pieces of content:
+If you navigate to `http://localhost:8080/realms/test-realm/account`, you will be taken to a login flow that has two dynamically rendered pieces of content:
 1. The login page should have a header at the top displaying the AB test value.
 2. The favicon on the page should be dynamic based on the result of the AB test
     - If the AB test is off, the keycloakify favicon will be displayed.
